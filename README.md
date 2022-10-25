@@ -58,3 +58,5 @@ function App() {
 
 export default App;
 ```
+## Contributions
+Always welcome to people who can improve the codebase/performance or add something useful 

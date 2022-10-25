@@ -62,7 +62,7 @@ npm i solid-former
 
 ## Api
 
-```
+```ts
 const formInstance = createForm(formOptions)
 ```
 

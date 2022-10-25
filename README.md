@@ -1,19 +1,21 @@
 # Solid Former
 
-Form control and validation for [Solid](https://solidjs.com)
+Form validation for [Solid](https://solidjs.com)
 
 ## Install
 
-```npm i solid-former```
+```bash
+npm i solid-former
+```
 
 ## Example 
 
 ```tsx
 import { Show } from 'solid-js';
-import { createForm } from 'solid-former';
+import { createForm } from 'solid-former'; 
 
 function App() {
-  const form = createForm({
+  const form = createForm({ 
     fields: {
       username: '',
       password: '',
@@ -60,15 +62,20 @@ export default App;
 ```
 ## Api
 
+```
+const formInstance = createForm(formOptions)
+```
+
 ### Form options
 |option|description|required|
 |-|-|-|
-|`fields`|Fields of form| |yes|
+|`fields`|Fields of form|yes|
 |`validators`|List of validators. One field can also have multiple validators|yes|
 |`validateOnInput`|If true it validates on everytime when any of the fields changes. Otherwise it will validate only when submit method is called. Disabled by default |no|
 |`stopAtFirstError`|If true it stops at first error. Otherwise it provides all errors. Enabled by default|no|
 |`onSubmit()`|Triggered when form.submit() called and validated without errors|no|
 |`onChange()`|Triggered when any of the fields change|no|
+
 
 ### Form instance
 |property/method|description|
@@ -81,4 +88,4 @@ export default App;
 |`submit()`| Submits form |
 
 ## Contributions
-Always welcome to people who can improve the codebase/performance or add something useful 
+Always welcome to people who can improve or add something useful

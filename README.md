@@ -2,12 +2,6 @@
 
 Form validation for [Solid](https://solidjs.com)
 
-## Install
-
-```bash
-npm i solid-former
-```
-
 ## Example 
 
 ```tsx
@@ -21,8 +15,8 @@ function App() {
       password: '',
     },
     validators: [
-      ({ username }) => username.length > 0 || { username: 'Username is required' },
-      ({ password }) => password.length > 8 || { password: 'Password is too short' },
+      ({ username }) => username.length >= 1 || { username: 'Username is required' },
+      ({ password }) => password.length >= 8 || { password: 'Password is too short' },
     ],
     onSubmit(fields) {
       alert(JSON.stringify(fields))
@@ -60,6 +54,12 @@ function App() {
 
 export default App;
 ```
+## Install
+
+```bash
+npm i solid-former
+```
+
 ## Api
 
 ```

@@ -8,7 +8,7 @@ Form control and validation for [Solid](https://solidjs.com)
 
 ## Example 
 
-```ts
+```tsx
 import { Show } from 'solid-js';
 import { createForm } from 'solid-former';
 

@@ -1,8 +1,60 @@
-# NodeJS Starter Project
+# Solid Former
 
-Project bootstrapped using [NodeJS Starter ToolKit](https://github.com/vitorsalgado/create-nodejs-ts).  
-Visit the repository for more details.
+Form control and validation for [Solid](https://solidjs.com)
 
-## Getting Started
+## Install
 
-Review the generated code, and it's recommended to run a `npm init` to adjust basic project configurations before start.
+```npm i solid-former```
+
+## Example 
+
+```ts
+import { Show } from 'solid-js';
+import { createForm } from 'solid-former';
+
+function App() {
+  const form = createForm({
+    fields: {
+      username: '',
+      password: '',
+    },
+    validators: [
+      ({ username }) => username.length > 0 || { username: 'Username is required' },
+      ({ password }) => password.length > 8 || { password: 'Password is too short' },
+    ],
+    onSubmit(fields) {
+      alert(JSON.stringify(fields))
+    },
+  });
+
+  return (
+    <div>
+        <div>Username</div>
+        <input
+          type="text"
+          value={form.fields().username.value}
+          oninput={(e) => form.input('username', e.currentTarget.value)}
+        />
+        <Show when={form.fields().username.error}>
+          <div>error: {form.fields().username.error}</div>
+        </Show>
+        <br />
+
+        <div>Password</div>
+        <input
+          type="text"
+          value={form.fields().password.value}
+          oninput={(e) => form.input('password', e.currentTarget.value)}
+        />
+        <Show when={form.fields().password.error}>
+          <div>error: {form.fields().password.error}</div>
+        </Show>
+        <br />
+
+      <button onclick={() => form.submit()}>Login</button>
+    </div>
+  );
+}
+
+export default App;
+```

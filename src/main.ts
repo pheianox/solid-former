@@ -2,7 +2,7 @@ import { createSignal } from 'solid-js'
 
 export type Options<T> = Partial<FlagOptions & CallbackOptions<T>> & ResourceOptions<T>
 export type Config<T> = FlagOptions & CallbackOptions<T> & ResourceOptions<T>
-export type Fields<T> = Record<keyof T, { name: keyof T, value: any, error: string | undefined }>
+export type Fields<T> = Record<keyof T, { name: keyof T; value: any; error: string | undefined }>
 export type Validator<T> = (fields: T) => boolean | ValidationError<T>
 export type ValidationError<T> = Partial<Record<keyof T, string>>
 
@@ -34,19 +34,19 @@ const defaultConfig: Config<any> = {
   stopAtFirstError: true,
 }
 
-export function createForm<T extends Record<keyof T, any>>(config: Options<T>) {
-  const options = { ...defaultConfig, ...config } as Config<T>
+export function createForm<T extends Record<keyof T, any>>(options: Options<T>) {
+  const config = { ...defaultConfig, ...options } as Config<T>
 
-  const initialFields = dataToFields(options.fields)
+  const initialFields = dataToFields(config.fields)
   const [fields, setFields] = createSignal(initialFields)
   const [isValid, setIsValid] = createSignal(true)
   const [isTouched, setIsTouched] = createSignal(false)
 
   function input(fieldName: keyof T, fieldValue: any) {
     setFields(fields => ({ ...fields, [fieldName]: { ...fields[fieldName], value: fieldValue } }))
-    if (options.validateOnInput) validate()
+    if (config.validateOnInput) validate()
     if (!isTouched()) setIsTouched(true)
-    options.onChange(fieldsToData(fields()))
+    config.onChange(fieldsToData(fields()))
   }
 
   function reset() {
@@ -54,8 +54,8 @@ export function createForm<T extends Record<keyof T, any>>(config: Options<T>) {
   }
 
   function submit() {
-    if (!options.validateOnInput) validate()
-    if (isValid()) options.onSubmit?.(fieldsToData(fields()))
+    if (!config.validateOnInput) validate()
+    if (isValid()) config.onSubmit?.(fieldsToData(fields()))
   }
 
   function validate() {
@@ -66,10 +66,10 @@ export function createForm<T extends Record<keyof T, any>>(config: Options<T>) {
     }
 
     const validationInput = fieldsToData(capturedFields)
-    const validationResult = options.validators.map(validator => validator(validationInput))
-    const validationErrors = validationResult.filter(result => typeof result === "object") as ValidationError<T>[]
+    const validationResult = config.validators.map(validator => validator(validationInput))
+    const validationErrors = validationResult.filter(result => typeof result === 'object') as ValidationError<T>[]
 
-    if (options.stopAtFirstError && validationErrors.length > 1) {
+    if (config.stopAtFirstError && validationErrors.length > 1) {
       validationErrors.length = 1
     }
 
@@ -89,24 +89,27 @@ export function createForm<T extends Record<keyof T, any>>(config: Options<T>) {
   }
 
   function dataToFields(data: T) {
-    return (Object.entries(data) as Entries<T>)
-      .reduce((result, [fieldName, fieldValue]) => ({
+    return (Object.entries(data) as Entries<T>).reduce(
+      (result, [fieldName, fieldValue]) => ({
         ...result,
         [fieldName]: {
           name: fieldName,
           value: fieldValue,
-          error: null
-        }
-      }), {} as Fields<T>)
+          error: null,
+        },
+      }),
+      {} as Fields<T>,
+    )
   }
 
   function fieldsToData(fields: Fields<T>) {
-    return Object
-      .entries(fields as Fields<any>)
-      .reduce((data, [fieldKey, field]) => ({
+    return Object.entries(fields as Fields<any>).reduce(
+      (data, [fieldKey, field]) => ({
         ...data,
-        [fieldKey]: field.value
-      }), {} as T)
+        [fieldKey]: field.value,
+      }),
+      {} as T,
+    )
   }
 
   return { fields, isValid, isTouched, input, reset, submit }

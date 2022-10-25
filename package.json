@@ -1,5 +1,5 @@
 {
-  "name": "solidjs-form",
+  "name": "solid-former",
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",

@@ -70,7 +70,7 @@ const formInstance = createForm(formOptions)
 |option|description|required|
 |-|-|-|
 |`fields`|Fields of form|yes|
-|`validators`|List of validators. One field can also have multiple validators|yes|
+|`validators`|List of validators. A validator is a function that takes fields and validates them. It has to return either the boolean true or an error object |yes|
 |`validateOnInput`|If true it validates on everytime when any of the fields changes. Otherwise it will validate only when submit method is called. Disabled by default |no|
 |`stopAtFirstError`|If true it stops at first error. Otherwise it provides all errors. Enabled by default|no|
 |`onSubmit()`|Triggered when form.submit() called and validated without errors|no|

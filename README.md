@@ -80,12 +80,12 @@ const formInstance = createForm(formOptions)
 ### Form instance
 |property/method|description|
 |-|-|
-|`fields`| Represents all fields | 
+|`fields`| Represents all fields. One field has three reactive properties: name, error, value | 
 |`isValid`| Tells whether form is valid or not |
 |`isTouched`| Tells if at least one of fields has been changed|
-|`input()`| Updates one field |
+|`input()`| Updates one field. Takes name of field and new value|
 |`reset()`| Resets all values to defaults  |
-|`submit()`| Submits form |
+|`submit()`| Submits form. Meaning validates form and calls the onSubmit after successful submit|
 
 ## Contributions
 Always welcome to people who can improve or add something useful
